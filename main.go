@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/danjelhuang/course-notifier/src/network"
 )
 
 func main() {
@@ -39,7 +41,5 @@ func main() {
 	}
 	courseCode = strings.TrimSpace(courseCode)
 
-	fmt.Println(term)
-	fmt.Println(year)
-	fmt.Println(courseCode)
+	err = network.RequestAPI(term, year, courseCode)
 }
