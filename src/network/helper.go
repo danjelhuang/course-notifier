@@ -3,8 +3,11 @@ package network
 import (
 	"errors"
 	"fmt"
+	"os"
 	"strconv"
 	"strings"
+
+	"github.com/joho/godotenv"
 )
 
 func getTermStartMonth(term string) (int, error) {
@@ -45,4 +48,13 @@ func getURL(termNumber, courseCode string) string {
 
 	url := fmt.Sprintf("%s/%s/%s/%s", baseURL, termNumber, courseSubject, courseNumber)
 	return url
+}
+
+func getAPIKey(key string) (string, error) {
+	err := godotenv.Load(".env")
+	if err != nil {
+		return "", errors.New("error loading .env file")
+	}
+
+	return os.Getenv(key), nil
 }

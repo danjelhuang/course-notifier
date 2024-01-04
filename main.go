@@ -44,8 +44,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	err = network.RequestAPI(term, year, courseCode)
+	body, err := network.RequestAPI(term, year, courseCode)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	fmt.Printf("%s", body)
 }
