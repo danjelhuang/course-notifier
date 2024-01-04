@@ -3,43 +3,49 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"strings"
 
 	"github.com/danjelhuang/course-notifier/src/network"
 )
 
-func main() {
+func readInput(prompt string) (string, error) {
 	reader := bufio.NewReader(os.Stdin)
-	var (
-		term       string
-		year       string
-		courseCode string
-	)
-
-	fmt.Println("Enter term: ")
-	term, err := reader.ReadString('\n')
+	fmt.Printf("Enter %s: ", prompt)
+	input, err := reader.ReadString('\n')
 	if err != nil {
-		fmt.Println("Error:", err)
-		return
+		return "", err
 	}
-	term = strings.TrimSpace(term)
+	return strings.TrimSpace(input), nil
+}
 
-	fmt.Println("Enter year: ")
-	year, err = reader.ReadString('\n')
+func parseInput() (string, string, string, error) {
+	term, err := readInput("term")
 	if err != nil {
-		fmt.Println("Error:", err)
-		return
+		return "", "", "", err
 	}
-	year = strings.TrimSpace(year)
 
-	fmt.Println("Enter course code: ")
-	courseCode, err = reader.ReadString('\n')
+	year, err := readInput("year")
 	if err != nil {
-		fmt.Println("Error:", err)
-		return
+		return "", "", "", err
 	}
-	courseCode = strings.TrimSpace(courseCode)
+
+	courseCode, err := readInput("course code")
+	if err != nil {
+		return "", "", "", err
+	}
+	return term, year, courseCode, nil
+}
+
+func main() {
+	term, year, courseCode, err := parseInput()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	err = network.RequestAPI(term, year, courseCode)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
