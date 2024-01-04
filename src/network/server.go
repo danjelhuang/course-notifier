@@ -21,7 +21,7 @@ func getAPIKey(key string) (string, error) {
 
 func RequestAPI(term, year, courseCode string) error {
 	client := &http.Client{}
-	
+
 	termNumber, err := getTermNumber(term, year)
 	if err != nil {
 		return errors.New("term number error")
