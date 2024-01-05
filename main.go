@@ -29,6 +29,5 @@ func main() {
 	}
 }
 
-// TODO:
 //		 finish logic off those structs
 // 		 send notifications when something happens

@@ -34,6 +34,9 @@ func callAPI(req *http.Request) ([]byte, error) {
 	if resp.StatusCode == http.StatusNotFound {
 		return []byte{}, errors.New("course not found")
 	}
+	if resp.StatusCode == http.StatusUnauthorized {
+		return []byte{}, errors.New("unauthorized (check API Key)")
+	}
 
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
@@ -49,7 +52,7 @@ func RequestAPI(input []string) ([]byte, error) {
 	courseCode := input[2]
 	termNumber, err := getTermNumber(term, year)
 	if err != nil {
-		return []byte{}, errors.New("term number error")
+		return []byte{}, errors.New("term number error (check term and year)")
 	}
 
 	url := getURL(termNumber, courseCode)
