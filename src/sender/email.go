@@ -1,9 +1,10 @@
 package sender
 
 import (
+	"fmt"
 	"log"
 	"net/smtp"
-	"strconv"
+	"strings"
 
 	"github.com/danjelhuang/course-notifier/src/models"
 	"github.com/danjelhuang/course-notifier/src/utils"
@@ -19,11 +20,9 @@ func SendEmail(section models.Section) {
 	to := "danielhuang18@gmail.com"
 	smtpHost := "smtp.gmail.com"
 	smtpPort := "587"
+	courseName := strings.ToUpper(section.CourseName)
 
-	message := "Subject: Course Opening\r\n" +
-		"To: " + to + "\r\n" +
-		"\r\n" +
-		"Section " + strconv.Itoa(section.ClassSection) + " of " + " now has space."
+	message := fmt.Sprintf("Subject: %s Opening\r\nTo: %s\r\n\r\n %s has an opening in Section %d", courseName, to, courseName, section.ClassSection)
 
 	// Create authentication
 	auth := smtp.PlainAuth("", from, password, smtpHost)

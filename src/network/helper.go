@@ -60,7 +60,7 @@ func getAPIKey(key string) (string, error) {
 	return os.Getenv(key), nil
 }
 
-func filterSections(sections []models.Section) []models.Section {
+func filterSections(sections []models.Section, courseName string) []models.Section {
 	var filtered []models.Section
 	const lecture = "LEC"
 	for _, section := range sections {
@@ -70,6 +70,7 @@ func filterSections(sections []models.Section) []models.Section {
 			} else {
 				section.HasSpace = false
 			}
+			section.CourseName = courseName
 			filtered = append(filtered, section)
 		}
 	}

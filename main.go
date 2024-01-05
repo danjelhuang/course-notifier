@@ -15,12 +15,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	body, err := network.RequestAPI(inputs)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	sections, err := network.GetSections(body)
+	sections, err := network.RequestAPI(inputs)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -32,8 +27,4 @@ func main() {
 			sender.SendEmail(section)
 		}
 	}
-
-
 }
-
-// continue working on email notifications

@@ -46,36 +46,41 @@ func callAPI(req *http.Request) ([]byte, error) {
 	return body, nil
 }
 
-func RequestAPI(input []string) ([]byte, error) {
-	term := input[0]
-	year := input[1]
-	courseCode := input[2]
-	termNumber, err := getTermNumber(term, year)
-	if err != nil {
-		return []byte{}, errors.New("term number error (check term and year)")
-	}
-
-	url := getURL(termNumber, courseCode)
-	req, err := setRequestBody(url)
-	if err != nil {
-		return []byte{}, errors.New("set request body error")
-	}
-
-	body, err := callAPI(req)
-	if err != nil {
-		return []byte{}, err
-	}
-
-	return body, nil
-}
-
-func GetSections(body []byte) ([]models.Section, error) {
+func getSections(body []byte, courseName string) ([]models.Section, error) {
 	var sections []models.Section
 	err := json.Unmarshal(body, &sections)
 	if err != nil {
 		return []models.Section{}, errors.New("unmarshal error")
 	}
 
-	sections = filterSections(sections)
+	sections = filterSections(sections, courseName)
+	return sections, nil
+}
+
+func RequestAPI(input []string) ([]models.Section, error) {
+	term := input[0]
+	year := input[1]
+	courseCode := input[2]
+	termNumber, err := getTermNumber(term, year)
+	if err != nil {
+		return []models.Section{}, errors.New("term number error (check term and year)")
+	}
+
+	url := getURL(termNumber, courseCode)
+	req, err := setRequestBody(url)
+	if err != nil {
+		return []models.Section{}, errors.New("set request body error")
+	}
+
+	body, err := callAPI(req)
+	if err != nil {
+		return []models.Section{}, err
+	}
+
+	sections, err := getSections(body, courseCode)
+	if err != nil {
+		return []models.Section{}, err
+	}
+
 	return sections, nil
 }
