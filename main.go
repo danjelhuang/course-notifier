@@ -49,5 +49,16 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("%s", body)
+	sections, err := network.GetSections(body)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, p := range sections {
+		fmt.Println(p.CourseID, p.ClassSection, p.CourseComponent, p.EnrolledStudents, p.MaxEnrollmentCapacity)
+	}
 }
+
+// TODO: read from input file
+//		 finish logic off those structs
+// 		 send notifications when something happens

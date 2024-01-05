@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/danjelhuang/course-notifier/src/models"
 	"github.com/joho/godotenv"
 )
 
@@ -57,4 +58,15 @@ func getAPIKey(key string) (string, error) {
 	}
 
 	return os.Getenv(key), nil
+}
+
+func filterSections(sections []models.Section) []models.Section {
+	var filtered []models.Section
+	const lecture = "LEC"
+	for _, section := range sections {
+		if section.CourseComponent == lecture {
+			filtered = append(filtered, section)
+		}
+	}
+	return filtered
 }

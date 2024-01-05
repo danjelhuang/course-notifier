@@ -1,9 +1,12 @@
 package network
 
 import (
+	"encoding/json"
 	"errors"
 	"io"
 	"net/http"
+
+	"github.com/danjelhuang/course-notifier/src/models"
 )
 
 func setRequestBody(url string) (*http.Request, error) {
@@ -54,4 +57,15 @@ func RequestAPI(term, year, courseCode string) ([]byte, error) {
 	}
 
 	return body, nil
+}
+
+func GetSections(body []byte) ([]models.Section, error) {
+	var sections []models.Section
+	err := json.Unmarshal(body, &sections)
+	if err != nil {
+		return []models.Section{}, errors.New("unmarshal error")
+	}
+
+	sections = filterSections(sections)
+	return sections, nil
 }
