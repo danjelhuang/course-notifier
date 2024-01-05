@@ -24,10 +24,8 @@ func SendEmail(section models.Section) {
 
 	message := fmt.Sprintf("Subject: %s Opening\r\nTo: %s\r\n\r\n %s has an opening in Section %d", courseName, to, courseName, section.ClassSection)
 
-	// Create authentication
 	auth := smtp.PlainAuth("", from, password, smtpHost)
 
-	// Send actual message
 	err = smtp.SendMail(smtpHost+":"+smtpPort, auth, from, []string{to}, []byte(message))
 	if err != nil {
 		log.Fatal(err)
