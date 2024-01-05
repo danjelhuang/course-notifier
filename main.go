@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/danjelhuang/course-notifier/src/network"
+	"github.com/danjelhuang/course-notifier/src/sender"
 	"github.com/danjelhuang/course-notifier/src/utils"
 )
 
@@ -24,10 +25,15 @@ func main() {
 		log.Fatal(err)
 	}
 
-	for _, p := range sections {
-		fmt.Println(p.CourseID, p.ClassSection, p.CourseComponent, p.EnrolledStudents, p.MaxEnrollmentCapacity)
+	for _, section := range sections {
+		fmt.Println(section.CourseID, section.ClassSection, section.CourseComponent, section.EnrolledStudents, section.MaxEnrollmentCapacity, section.HasSpace)
+
+		if section.HasSpace {
+			sender.SendEmail(section)
+		}
 	}
+
+
 }
 
-//		 finish logic off those structs
-// 		 send notifications when something happens
+// continue working on email notifications

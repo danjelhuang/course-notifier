@@ -65,6 +65,11 @@ func filterSections(sections []models.Section) []models.Section {
 	const lecture = "LEC"
 	for _, section := range sections {
 		if section.CourseComponent == lecture {
+			if section.EnrolledStudents < section.MaxEnrollmentCapacity {
+				section.HasSpace = true
+			} else {
+				section.HasSpace = false
+			}
 			filtered = append(filtered, section)
 		}
 	}
