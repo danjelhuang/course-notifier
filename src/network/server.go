@@ -39,7 +39,10 @@ func callAPI(req *http.Request) ([]byte, error) {
 	return body, nil
 }
 
-func RequestAPI(term, year, courseCode string) ([]byte, error) {
+func RequestAPI(input []string) ([]byte, error) {
+	term := input[0]
+	year := input[1]
+	courseCode := input[2]
 	termNumber, err := getTermNumber(term, year)
 	if err != nil {
 		return []byte{}, errors.New("term number error")
