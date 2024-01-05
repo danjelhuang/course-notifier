@@ -31,6 +31,10 @@ func callAPI(req *http.Request) ([]byte, error) {
 	if err != nil {
 		return []byte{}, err
 	}
+	if resp.StatusCode == http.StatusNotFound {
+		return []byte{}, errors.New("course not found")
+	}
+
 	defer resp.Body.Close()
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
