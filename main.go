@@ -10,12 +10,12 @@ import (
 )
 
 func main() {
-	inputs, err := utils.GetInputVars()
+	courses, err := utils.GetCourses()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	sections, err := network.RequestAPI(inputs)
+	sections, err := network.RequestAPI(courses)
 	if err != nil {
 		log.Fatal(err)
 	}
