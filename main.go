@@ -38,7 +38,12 @@ func main() {
 		log.Fatal(err)
 	}
 
-	ticker := time.NewTicker(30 * time.Minute)
+	interval, err := utils.GetInterval()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	ticker := time.NewTicker(time.Duration(interval) * time.Minute)
 	for range ticker.C {
 		worker(courses)
 	}

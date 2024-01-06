@@ -49,3 +49,21 @@ func GetSenderEmail() ([]string, error) {
 		config.SenderEmail, os.Getenv("appPassword"),
 	}, nil
 }
+
+func GetInterval() (int, error) {
+	config, err := loadConfig()
+	if err != nil {
+		return 0, errors.New("load config error")
+	}
+
+	return config.IntervalMinutes, nil
+}
+
+func GetReceiverEmail() (string, error) {
+	config, err := loadConfig()
+	if err != nil {
+		return "", errors.New("load config error")
+	}
+
+	return config.ReceiverEmail, nil
+}

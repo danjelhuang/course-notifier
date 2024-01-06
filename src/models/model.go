@@ -1,8 +1,10 @@
 package models
 
 type Config struct {
-	SenderEmail string   `json:"sender_email"`
-	Courses     []Course `json:"courses"`
+	SenderEmail     string   `json:"sender_email"`
+	ReceiverEmail   string   `json:"receiver_email"`
+	IntervalMinutes int      `json:"interval_minutes"`
+	Courses         []Course `json:"courses"`
 }
 
 type Course struct {

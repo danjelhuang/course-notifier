@@ -17,7 +17,10 @@ func SendEmail(section models.Section) {
 	}
 	from := senderEmail[0]
 	password := senderEmail[1]
-	to := "danielhuang18@gmail.com"
+	to, err := utils.GetReceiverEmail()
+	if err != nil {
+		log.Fatal(err)
+	}
 	smtpHost := "smtp.gmail.com"
 	smtpPort := "587"
 	courseName := strings.ToUpper(section.CourseName)
