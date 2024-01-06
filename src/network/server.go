@@ -57,10 +57,10 @@ func getSections(body []byte, courseName string) ([]models.Section, error) {
 	return sections, nil
 }
 
-func RequestAPI(input []models.Course) ([]models.Section, error) {
-	term := input[0].Term
-	year := input[0].Year
-	courseCode := input[0].CourseCode
+func RequestAPI(course models.Course) ([]models.Section, error) {
+	term := course.Term
+	year := course.Year
+	courseCode := course.CourseCode
 	termNumber, err := getTermNumber(term, year)
 	if err != nil {
 		return []models.Section{}, errors.New("term number error (check term and year)")

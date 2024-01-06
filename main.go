@@ -15,16 +15,18 @@ func main() {
 		log.Fatal(err)
 	}
 
-	sections, err := network.RequestAPI(courses)
-	if err != nil {
-		log.Fatal(err)
-	}
+	for _, course := range courses {
+		sections, err := network.RequestAPI(course)
+		if err != nil {
+			log.Fatal(err)
+		}
 
-	for _, section := range sections {
-		fmt.Println(section.CourseID, section.ClassSection, section.CourseComponent, section.EnrolledStudents, section.MaxEnrollmentCapacity, section.HasSpace)
+		for _, section := range sections {
+			fmt.Println(section.CourseID, section.CourseName, section.ClassSection, section.CourseComponent, section.EnrolledStudents, section.MaxEnrollmentCapacity, section.HasSpace)
 
-		if section.HasSpace {
-			sender.SendEmail(section)
+			if section.HasSpace {
+				sender.SendEmail(section)
+			}
 		}
 	}
 }
