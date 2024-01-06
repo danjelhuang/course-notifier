@@ -38,7 +38,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	ticker := time.NewTicker(time.Minute)
+	ticker := time.NewTicker(30 * time.Minute)
 	for range ticker.C {
 		worker(courses)
 	}
