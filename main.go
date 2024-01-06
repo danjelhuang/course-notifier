@@ -11,6 +11,8 @@ import (
 	"github.com/danjelhuang/course-notifier/src/utils"
 )
 
+var sentEmails = map[string]bool{}
+
 func worker(courses []models.Course) {
 	for _, course := range courses {
 		sections, err := network.RequestAPI(course)
@@ -20,9 +22,11 @@ func worker(courses []models.Course) {
 
 		for _, section := range sections {
 			fmt.Println(section.CourseID, section.CourseName, section.ClassSection, section.CourseComponent, section.EnrolledStudents, section.MaxEnrollmentCapacity, section.HasSpace)
+			sectionID := fmt.Sprintf("%s %d", section.CourseName, section.ClassSection)
 
-			if section.HasSpace {
+			if _, sent := sentEmails[sectionID]; section.HasSpace && !sent {
 				sender.SendEmail(section)
+				sentEmails[sectionID] = true
 			}
 		}
 	}
@@ -34,10 +38,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	ticker := time.NewTicker(10 * time.Minute)
+	ticker := time.NewTicker(time.Minute)
 	for range ticker.C {
 		worker(courses)
 	}
 }
 
-// infinite loop, don't spam emails
+// when to remove from sentEmails
