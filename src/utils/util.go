@@ -58,12 +58,3 @@ func GetInterval() (int, error) {
 
 	return config.IntervalMinutes, nil
 }
-
-func GetReceiverEmail() (string, error) {
-	config, err := loadConfig()
-	if err != nil {
-		return "", errors.New("load config error")
-	}
-
-	return config.ReceiverEmail, nil
-}

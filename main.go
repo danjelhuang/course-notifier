@@ -25,7 +25,7 @@ func worker(courses []models.Course) {
 			sectionID := fmt.Sprintf("%s %d", section.CourseName, section.ClassSection)
 
 			if _, sent := sentEmails[sectionID]; section.HasSpace && !sent {
-				sender.SendEmail(section)
+				sender.SendEmail(section, course.ReceiverEmails)
 				sentEmails[sectionID] = true
 			}
 		}
