@@ -48,5 +48,3 @@ func main() {
 		worker(courses)
 	}
 }
-
-// when to remove from sentEmails
